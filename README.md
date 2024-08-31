@@ -1,8 +1,11 @@
 Better Uptime API Clients
 -------------------------
 This is a go library for setting up and pausing and unpausing BetterUptime Monitors
+
 This can be used to temporarily pause monitoring during patching
+
 It uses the Uptime API see [Getting started with Uptime API](https://betterstack.com/docs/uptime/api/getting-started-with-uptime-api/)
+
 Example programs are included to set up from a CSV file and to pause and unpause monitors
 
 Programs using the library
