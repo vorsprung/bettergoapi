@@ -1,0 +1,4 @@
+﻿url,pronouncable_name,monitor_type,,check_frequency,expected status codes,request_timeout,EU,US,AP,AU
+https://app20.linuxufo.com/indigo/healthcheck,Novartis Invest,keyword,Server test passed.,180,200,30,✔,✔,,
+https://alpha.linuxufo.com/charlie-alpha/healthcheck,GSK Analytics,keyword,Server test passed.,180,200,30,✔,✔,,
+https://alpha.linuxufo.com/wlases/healthcheck,GSK Cases,keyword,Server test passed.,180,200,30,✔,✔,,
