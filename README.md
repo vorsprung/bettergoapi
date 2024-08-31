@@ -89,11 +89,11 @@ The TEAM_TOKEN is not set, see below
 
 Dependencies
 ------------
-To build, go lang compiler (v 1.20.0 used during development)
-Access to Better Uptime requires API Token, see https://betterstack.com/docs/uptime/api/getting-started-with-better-uptime-api/#obtaining-a-better-uptime-api-token
-The API Token should be set as a env variable called TEAM_TOKEN
-There is code to use a SSM parameter called "better-monitor-token" to store/retrieve the token but this is not tested
-The host running the alarmtoggle program needs to have network access to the betteruptime.com api endpoints
+ * To build, go lang compiler (v 1.20.0 used during development)
+ * Access to Better Uptime requires API Token, see https://betterstack.com/docs/uptime/api/getting-started-with-better-uptime-api/#obtaining-a-better-uptime-api-token
+ * The API Token should be set as a env variable called TEAM_TOKEN
+ * There is code to use a SSM parameter called "better-monitor-token" to store/retrieve the token but this is not tested
+ * The host running the alarmtoggle program needs to have network access to the betteruptime.com api endpoints
 
 Files
 -----
