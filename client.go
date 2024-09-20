@@ -1,4 +1,4 @@
-package better
+package bettergoapi
 
 import (
 	"bytes"
@@ -29,7 +29,7 @@ func GetAWS() *session.Session {
 }
 
 func lowerMakeReq(method string, path string, body io.Reader, Token string) (*http.Request, error) {
-	req, err := http.NewRequest(method, BETTERURL+path, body)
+	req, err := http.NewRequest(method, bettergoapiURL+path, body)
 	if req != nil {
 		req.Header.Set("Authorization", "Bearer "+Token)
 		req.Header.Set("Content-Type", "application/json")
@@ -45,7 +45,7 @@ func makeReq(method string, path string, body io.Reader) (*http.Request, error) 
 		sess := GetAWS()
 		svc := ssm.New(sess)
 		param, err := svc.GetParameter(&ssm.GetParameterInput{
-			Name:           aws.String("better-monitor-token"),
+			Name:           aws.String("bettergoapi-monitor-token"),
 			WithDecryption: aws.Bool(true),
 		})
 		if err != nil {

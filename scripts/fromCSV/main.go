@@ -1,7 +1,7 @@
 package main
 
 import (
-	"better"
+	"bettergoapi"
 	"encoding/csv"
 	"flag"
 	"log"
@@ -43,7 +43,7 @@ func main() {
 		}}
 	var createdMonitors [][]string
 	for _, monitorData := range records {
-		var monitor better.Monitor
+		var monitor bettergoapi.Monitor
 
 		monitor.URL = monitorData[0]
 		monitor.MonitorType = monitorData[2]
@@ -59,13 +59,13 @@ func main() {
 
 		//monitor.SetType("monitor")
 
-		var res better.Monitor
+		var res bettergoapi.Monitor
 
 		if *dry {
 			res.ID = "1234"
 			err = nil
 		} else {
-			res, err = better.PutMonitor(client, monitor)
+			res, err = bettergoapi.PutMonitor(client, monitor)
 		}
 		createdMonitors = append(createdMonitors, []string{monitor.URL, monitor.PronounceableName, res.ID})
 		if err != nil || res.ID == "" {

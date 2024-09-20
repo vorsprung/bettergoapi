@@ -1,4 +1,4 @@
-package better
+package bettergoapi
 
 import (
 	"bytes"
@@ -24,7 +24,7 @@ type MyDownloader interface {
 func SaveToS3(monitor []Monitor, path string, uploader MyUploader) error {
 	data, _ := json.MarshalIndent(monitor, "  ", " ")
 	_, err := uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String("better-monitor"),
+		Bucket: aws.String("bettergoapi-monitor"),
 		Key:    aws.String(path),
 		Body:   bytes.NewReader(data),
 	})
@@ -36,7 +36,7 @@ func LoadFromS3(path string, downloader MyDownloader) ([]Monitor, error) {
 	var monitor []Monitor
 	buf := aws.NewWriteAtBuffer([]byte{})
 	_, err := downloader.Download(buf, &s3.GetObjectInput{
-		Bucket: aws.String("better-monitor"),
+		Bucket: aws.String("bettergoapi-monitor"),
 		Key:    aws.String(path),
 	})
 	if err != nil {

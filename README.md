@@ -1,10 +1,10 @@
-Better Uptime API Clients
+bettergoapi Uptime API Clients
 -------------------------
-This is a go library for setting up and pausing and unpausing BetterUptime Monitors
+This is a go library for setting up and pausing and unpausing bettergoapiUptime Monitors
 
 This can be used to temporarily pause monitoring during patching
 
-It uses the Uptime API see [Getting started with Uptime API](https://betterstack.com/docs/uptime/api/getting-started-with-uptime-api/)
+It uses the Uptime API see [Getting started with Uptime API](https://bettergoapistack.com/docs/uptime/api/getting-started-with-uptime-api/)
 
 Example programs are included to set up from a CSV file and to pause and unpause monitors
 
@@ -68,7 +68,7 @@ If this happens
 
     2023/04/14 11:59:39 env var not set and failed to get from ssm
     2023/04/14 11:59:39 patch failed 401 Unauthorized
-    2023/04/14 11:59:39 response was {"errors":"Invalid Team API token. How to find your Team API token: https://betterstack.com/docs/uptime/api/getting-started-with-better-uptime-api#obtaining-a-better-uptime-api-token"}
+    2023/04/14 11:59:39 response was {"errors":"Invalid Team API token. How to find your Team API token: https://bettergoapistack.com/docs/uptime/api/getting-started-with-bettergoapi-uptime-api#obtaining-a-bettergoapi-uptime-api-token"}
     2023/04/14 11:59:39 patch failed paused=false https://romeo.linuxufo.com/state.txt alarm id 1148817
     exit status 1
 
@@ -90,10 +90,10 @@ The TEAM_TOKEN is not set, see below
 Dependencies
 ------------
  * To build, go lang compiler (v 1.20.0 used during development)
- * Access to Better Uptime requires API Token, see https://betterstack.com/docs/uptime/api/getting-started-with-better-uptime-api/#obtaining-a-better-uptime-api-token
+ * Access to bettergoapi Uptime requires API Token, see https://bettergoapistack.com/docs/uptime/api/getting-started-with-bettergoapi-uptime-api/#obtaining-a-bettergoapi-uptime-api-token
  * The API Token should be set as a env variable called TEAM_TOKEN
- * There is code to use a SSM parameter called "better-monitor-token" to store/retrieve the token but this is not tested
- * The host running the alarmtoggle program needs to have network access to the betteruptime.com api endpoints
+ * There is code to use a SSM parameter called "bettergoapi-monitor-token" to store/retrieve the token but this is not tested
+ * The host running the alarmtoggle program needs to have network access to the bettergoapiuptime.com api endpoints
 
 Files
 -----
@@ -106,7 +106,7 @@ Files
 | go.sum              | go module config file                                     |
 | loadcompare.go      | golang compare monitors (not currently used)              |
 | loadcompare_test.go |                                                           |
-| monitor.go          | golang definition of better uptime monitor data structure |
+| monitor.go          | golang definition of bettergoapi uptime monitor data structure |
 | save.go             | save monitors as json to file or s3                       |
 | save_test.go        |                                                           |
 

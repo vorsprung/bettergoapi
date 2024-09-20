@@ -1,4 +1,4 @@
-module better
+module bettergoapi
 
 go 1.19
 
@@ -17,4 +17,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace better => github.com/vorsprung/bettergoapi v0.0.0-20240831132642-42121f7303b4
+replace bettergoapi => github.com/vorsprung/bettergoapigoapi v0.0.0-20240831132642-42121f7303b4

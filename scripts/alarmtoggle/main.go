@@ -1,7 +1,6 @@
 package main
 
 import (
-	"better"
 	"encoding/json"
 	"flag"
 	"log"
@@ -10,6 +9,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/vorsprung/bettergoapi"
 )
 
 func main() {
@@ -51,7 +52,7 @@ func main() {
 		}}
 	// dump the alarm settings, all fields.  This is for show only or for store only
 	if *show || *store {
-		allMonitors, err := better.GetMonitors(client)
+		allMonitors, err := bettergoapi.GetMonitors(client)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -66,7 +67,7 @@ func main() {
 
 		// store the current alarm states to a file
 		if *store {
-			err := better.SaveToFile(allMonitors, "/tmp/alarms.json")
+			err := bettergoapi.SaveToFile(allMonitors, "/tmp/alarms.json")
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -75,7 +76,7 @@ func main() {
 	}
 
 	if *set != "" {
-		storedMonitors, err := better.LoadFromFile("/tmp/alarms.json")
+		storedMonitors, err := bettergoapi.LoadFromFile("/tmp/alarms.json")
 		if err != nil {
 			log.Fatalf("reading alarms from store file %s", err)
 		}
@@ -109,9 +110,9 @@ func main() {
 	}
 }
 
-func putShow(client *http.Client, monitor better.Monitor) error {
-	pauseOnly := better.Monitor{Paused: monitor.Paused, ID: monitor.ID}
-	_, err := better.PatchMonitor(client, pauseOnly)
+func putShow(client *http.Client, monitor bettergoapi.Monitor) error {
+	pauseOnly := bettergoapi.Monitor{Paused: monitor.Paused, ID: monitor.ID}
+	_, err := bettergoapi.PatchMonitor(client, pauseOnly)
 	status := "unknown"
 	if err != nil {
 		status = err.Error()

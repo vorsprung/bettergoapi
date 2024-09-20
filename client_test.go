@@ -1,4 +1,4 @@
-package better
+package bettergoapi
 
 import (
 	"bytes"

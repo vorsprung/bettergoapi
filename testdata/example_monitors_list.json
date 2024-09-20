@@ -329,8 +329,8 @@
         }
     ],
     "pagination": {
-        "first": "https://betteruptime.com/api/v2/monitors?page=1",
-        "last": "https://betteruptime.com/api/v2/monitors?page=1",
+        "first": "https://bettergoapiuptime.com/api/v2/monitors?page=1",
+        "last": "https://bettergoapiuptime.com/api/v2/monitors?page=1",
         "prev": null,
         "next": null
     }
