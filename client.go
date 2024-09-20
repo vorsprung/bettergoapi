@@ -28,6 +28,17 @@ func GetAWS() *session.Session {
 	return awsSession
 }
 
+func lowerMakeReq(method string, path string, body io.Reader, Token string) (*http.Request, error) {
+	req, err := http.NewRequest(method, BETTERURL+path, body)
+	if req != nil {
+		req.Header.Set("Authorization", "Bearer "+Token)
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Accept", "*/*")
+		req.Header.Set("User-Agent", "curl/7.85.0")
+	}
+	return req, err
+}
+
 func makeReq(method string, path string, body io.Reader) (*http.Request, error) {
 	Token := os.Getenv("TEAM_TOKEN")
 	if Token == "" {
@@ -44,14 +55,7 @@ func makeReq(method string, path string, body io.Reader) (*http.Request, error) 
 			Token = *param.Parameter.Value
 		}
 	}
-	req, err := http.NewRequest(method, BETTERURL+path, body)
-	if req != nil {
-		req.Header.Set("Authorization", "Bearer "+Token)
-		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("Accept", "*/*")
-		req.Header.Set("User-Agent", "curl/7.85.0")
-	}
-	return req, err
+	return lowerMakeReq(method, path, body, Token)
 }
 func GetRemote(path string, cli HClient) ([]byte, error) {
 
