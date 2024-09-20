@@ -2,7 +2,7 @@ package bettergoapi
 
 import "time"
 
-const bettergoapiURL = "https://bettergoapiuptime.com/api/v2/"
+const bettergoapiURL = "https://uptime.betterstack.com/api/v2/"
 
 type Monitor struct {
 	ID                  string     `json:"id,omitempty"`

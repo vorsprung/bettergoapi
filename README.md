@@ -93,7 +93,7 @@ Dependencies
  * Access to bettergoapi Uptime requires API Token, see https://bettergoapistack.com/docs/uptime/api/getting-started-with-bettergoapi-uptime-api/#obtaining-a-bettergoapi-uptime-api-token
  * The API Token should be set as a env variable called TEAM_TOKEN
  * There is code to use a SSM parameter called "bettergoapi-monitor-token" to store/retrieve the token but this is not tested
- * The host running the alarmtoggle program needs to have network access to the bettergoapiuptime.com api endpoints
+ * The host running the alarmtoggle program needs to have network access to the uptime.betterstack.com api endpoints
 
 Files
 -----

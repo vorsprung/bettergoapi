@@ -63,7 +63,7 @@ func GetRemote(path string, cli HClient) ([]byte, error) {
 
 	res, err := cli.Do(req)
 
-	if res.StatusCode != http.StatusOK || err != nil {
+	if err != nil || res.StatusCode != http.StatusOK {
 		return nil, err
 	}
 
