@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"reflect"
+        "strings"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/service/s3"
@@ -46,7 +47,9 @@ func TestSaveBad(t *testing.T) {
 	var monitor Monitor = Monitor{}
 	var badpath = "/dev/xyz"
 	err := SaveToFile([]Monitor{monitor}, badpath)
-	assert.Containsf(t, err.Error(), "operation not permitted", "file read error is %v", err)
+        operation:=strings.Contains(err.Error(),"operation not permitted")
+        permission:=strings.Contains(err.Error(),"permission denied")
+	assert.True(t, operation || permission, "file read error is %v", err)
 }
 
 func TestLoad(t *testing.T) {
