@@ -12,7 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
-	"github.com/pieoneers/jsonapi-go"
+	"github.com/vorsprung/jsonapi-go"
 )
 
 var awsSession *session.Session

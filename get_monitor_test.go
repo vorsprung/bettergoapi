@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/pieoneers/jsonapi-go"
+	"github.com/vorsprung/jsonapi-go"
 	"github.com/stretchr/testify/assert"
 )
 

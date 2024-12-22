@@ -13,7 +13,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
-	"github.com/pieoneers/jsonapi-go"
+	"github.com/vorsprung/jsonapi-go"
 	"github.com/stretchr/testify/assert"
 )
 
