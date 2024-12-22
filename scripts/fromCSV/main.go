@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bettergoapi"
 	"encoding/csv"
 	"flag"
 	"log"
@@ -10,15 +9,17 @@ import (
 	"os"
 	"strconv"
 	"time"
+        "path/filepath"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/vorsprung/bettergoapi"
 )
 
 func main() {
 	dry := flag.Bool("dry", false, "dry run")
 
 	flag.Parse()
-	filename := os.Args[1]
+	filename := filepath.Clean(os.Args[1])
 	//filename := "../../ht.csv"
 	log.Printf("reading from file %s", filename)
 	f, _ := os.Open(filename)
