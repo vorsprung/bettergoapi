@@ -2,6 +2,7 @@ package bettergoapi
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"io"
@@ -9,23 +10,29 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/ssm"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/ssm"
 	"github.com/vorsprung/jsonapi-go"
 )
 
-var awsSession *session.Session
+var awsConfigInitialized bool
+var awsConfig aws.Config
 
 type HClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
-func GetAWS() *session.Session {
-	if awsSession == nil {
-		awsSession = session.Must(session.NewSession())
+func GetAWSConfig(ctx context.Context) aws.Config {
+	if !awsConfigInitialized {
+		var err error
+		awsConfig, err = config.LoadDefaultConfig(ctx)
+		if err != nil {
+			log.Printf("Failed to load AWS config: %v", err)
+		}
+		awsConfigInitialized = true
 	}
-	return awsSession
+	return awsConfig
 }
 
 func lowerMakeReq(method string, path string, body io.Reader, Token string) (*http.Request, error) {
@@ -42,11 +49,13 @@ func lowerMakeReq(method string, path string, body io.Reader, Token string) (*ht
 func makeReq(method string, path string, body io.Reader) (*http.Request, error) {
 	Token := os.Getenv("TEAM_TOKEN")
 	if Token == "" {
-		sess := GetAWS()
-		svc := ssm.New(sess)
-		param, err := svc.GetParameter(&ssm.GetParameterInput{
+		ctx := context.Background()
+		cfg := GetAWSConfig(ctx)
+		svc := ssm.NewFromConfig(cfg)
+		withDecryption := true
+		param, err := svc.GetParameter(ctx, &ssm.GetParameterInput{
 			Name:           aws.String("bettergoapi-monitor-token"),
-			WithDecryption: aws.Bool(true),
+			WithDecryption: &withDecryption,
 		})
 		if err != nil {
 			log.Print("env var not set and failed to get from ssm")

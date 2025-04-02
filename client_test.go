@@ -2,17 +2,15 @@ package bettergoapi
 
 import (
 	"bytes"
+	"context"
 	"io"
 	"log"
 	"math"
-
-	//"math"
 	"net/http"
 	"os"
 	"testing"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -87,8 +85,9 @@ func TestPostClient(t *testing.T) {
 
 func TestPatchClient(t *testing.T) {
 	log.SetOutput(io.Discard)
-	rc := new(MyHttpClient)                               // mock client
-	nm := &Monitor{ID: "1083221", Paused: aws.Bool(true)} // input data for patch
+	rc := new(MyHttpClient)     // mock client
+	paused := true
+	nm := &Monitor{ID: "1083221", Paused: &paused} // input data for patch
 	filebytes, _ := os.ReadFile("testdata/example_single_monitor.json")
 	rc.getThis = &http.Response{}
 	rc.getThis.StatusCode = 200
@@ -99,8 +98,9 @@ func TestPatchClient(t *testing.T) {
 }
 
 func TestPauseMonitor(t *testing.T) {
-	rc := new(MyHttpClient)                               // mock client
-	nm := &Monitor{ID: "1083221", Paused: aws.Bool(true)} // input data for patch
+	rc := new(MyHttpClient)     // mock client
+	paused := true
+	nm := &Monitor{ID: "1083221", Paused: &paused} // input data for patch
 	filebytes, _ := os.ReadFile("testdata/example_single_monitor.json")
 	rc.getThis = &http.Response{}
 	rc.getThis.StatusCode = 200
@@ -160,9 +160,9 @@ func TestBadPostClient(t *testing.T) {
 	assert.Nil(t, res)
 }
 
-func TestAWSSession(t *testing.T) {
-	var sess session.Session
-	awsSession = &sess
-	res := GetAWS()
-	assert.NotNil(t, res)
+func TestAWSConfig(t *testing.T) {
+	awsConfigInitialized = false
+	ctx := context.Background()
+	_ = GetAWSConfig(ctx)
+	assert.True(t, awsConfigInitialized)
 }

@@ -89,7 +89,7 @@ The TEAM_TOKEN is not set, see below
 
 Dependencies
 ------------
- * To build, go lang compiler (v 1.20.0 used during development)
+ * To build, go lang compiler (v 1.23 used during development)
  * Access to bettergoapi Uptime requires API Token, see https://bettergoapistack.com/docs/uptime/api/getting-started-with-bettergoapi-uptime-api/#obtaining-a-bettergoapi-uptime-api-token
  * The API Token should be set as a env variable called TEAM_TOKEN
  * There is code to use a SSM parameter called "bettergoapi-monitor-token" to store/retrieve the token but this is not tested
@@ -114,4 +114,4 @@ Files
 Platforms
 ---------
 Tested on Ubuntu 22.04 and MacOS 14.6
-go version go 1.22.6
+go version go 1.23.8
