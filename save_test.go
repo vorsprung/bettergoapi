@@ -1,20 +1,18 @@
 package bettergoapi
 
 import (
-
-	//"math"
-
+	"context"
 	"encoding/json"
 	"io"
 	"os"
 	"reflect"
-        "strings"
+	"strings"
 	"testing"
 
-	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
-	"github.com/vorsprung/jsonapi-go"
+	"github.com/aws/aws-sdk-go-v2/feature/s3/manager"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/stretchr/testify/assert"
+	"github.com/vorsprung/jsonapi-go"
 )
 
 func TestSaveLoad(t *testing.T) {
@@ -47,8 +45,8 @@ func TestSaveBad(t *testing.T) {
 	var monitor Monitor = Monitor{}
 	var badpath = "/dev/xyz"
 	err := SaveToFile([]Monitor{monitor}, badpath)
-        operation:=strings.Contains(err.Error(),"operation not permitted")
-        permission:=strings.Contains(err.Error(),"permission denied")
+	operation := strings.Contains(err.Error(), "operation not permitted")
+	permission := strings.Contains(err.Error(), "permission denied")
 	assert.True(t, operation || permission, "file read error is %v", err)
 }
 
@@ -77,11 +75,11 @@ func TestLoadBad(t *testing.T) {
 }
 
 type TestUploader struct {
-	Dummy *s3manager.UploadOutput
+	Dummy *manager.UploadOutput
 	err   error
 }
 
-func (u *TestUploader) Upload(*s3manager.UploadInput) (*s3manager.UploadOutput, error) {
+func (u *TestUploader) Upload(ctx context.Context, input *s3.PutObjectInput, opts ...func(*manager.Uploader)) (*manager.UploadOutput, error) {
 	return u.Dummy, u.err
 }
 
@@ -89,32 +87,30 @@ func TestSaveS3(t *testing.T) {
 	var u *TestUploader = &TestUploader{}
 	var path = "testdata/example_monitors_list.json"
 	m, _ := LoadFromFile(path)
-	res := SaveToS3(m, "foo", u)
+	ctx := context.Background()
+	res := SaveToS3(ctx, m, "foo", u)
 	assert.Nil(t, res)
 }
 
-//	type MyDownloader interface {
-//		Download(io.WriterAt, *s3.GetObjectInput, ...func(*s3manager.Downloader)) (int64, error)
-//	}
 type TestDownloader struct {
 	Dummy int64
 	err   error
 }
 
-func (u *TestDownloader) Download(io.WriterAt, *s3.GetObjectInput, ...func(*s3manager.Downloader)) (int64, error) {
+func (u *TestDownloader) Download(ctx context.Context, w io.WriterAt, input *s3.GetObjectInput, opts ...func(*manager.Downloader)) (int64, error) {
 	return u.Dummy, u.err
 }
 
 func TestLoadS3(t *testing.T) {
 	var u *TestDownloader = &TestDownloader{Dummy: 23}
-	_, res := LoadFromS3("foo", u)
+	ctx := context.Background()
+	_, res := LoadFromS3(ctx, "foo", u)
 	assert.Nil(t, res)
-
 }
 
 func TestLoadS3Bad(t *testing.T) {
 	var u *TestDownloader = &TestDownloader{Dummy: 23, err: io.EOF}
-	_, res := LoadFromS3("foo", u)
+	ctx := context.Background()
+	_, res := LoadFromS3(ctx, "foo", u)
 	assert.NotNil(t, res)
-
 }
